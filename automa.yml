@@ -2,7 +2,7 @@ name: Aggiornamento Supabase Programmato
 
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 0 */3 * *'
 
 jobs:
   aggiorna-supabase:
