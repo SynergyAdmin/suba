@@ -3,6 +3,7 @@ name: Aggiornamento Supabase Programmato
 on:
   schedule:
     - cron: '0 0 */3 * *'
+  workflow_dispatch:
 
 jobs:
   aggiorna-supabase:
@@ -10,6 +11,6 @@ jobs:
     steps:
       - name: Esegui chiamata API
         run: |
-          curl -X GET 'https://jbwwvludgpnybsbanyng.supabase.co/rest/v1/proposals' \
-          -H 'apikey: ${{ secrets.SUPABASEANONKEY }}' \
-          -H 'Authorization: Bearer ${{ secrets.SUPABASEANONKEY }}'
+          curl -X GET 'https://jbwvwvludgpnybsbanyng.supabase.co/rest/v1/proposals' \
+            -H 'apikey: ${{ secrets.SUPABASEANONKEY }}' \
+            -H 'Authorization: Bearer ${{ secrets.SUPABASEANONKEY }}'
