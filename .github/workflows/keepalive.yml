@@ -1,0 +1,31 @@
+name: Supabase Keepalive
+
+on:
+  schedule:
+    - cron: '0 0 */3 * *'   # ogni 6 giorni alle 08:00 UTC
+  workflow_dispatch:          # eseguibile anche a mano dal pannello GitHub
+
+jobs:
+  ping:
+    name: Ping Supabase
+    runs-on: ubuntu-latest
+    steps:
+      - name: UPSERT keepalive row
+        run: |
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X POST \
+            "${{ secrets.SUPABASE_URL }}/rest/v1/_keepalive" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Content-Type: application/json" \
+            -H "Prefer: resolution=merge-duplicates" \
+            -d '{"id": 1, "last_ping": "'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'"}')
+
+          echo "HTTP status: $RESPONSE"
+
+          if [ "$RESPONSE" -lt 200 ] || [ "$RESPONSE" -ge 300 ]; then
+            echo "❌ Ping fallito con status $RESPONSE"
+            exit 1
+          fi
+
+          echo "✅ Supabase keepalive OK — $(date -u)"
