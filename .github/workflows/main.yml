@@ -11,6 +11,6 @@ jobs:
     steps:
       - name: Esegui chiamata API
         run: |
-          curl -X GET 'https://jbwvwvludgpnybsbanyng.supabase.co/rest/v1/proposals' \
+          curl -X GET 'https://jbwvwludgpnysbanyntg.supabase.co/rest/v1/proposals' \
             -H 'apikey: ${{ secrets.SUPABASEANONKEY }}' \
             -H 'Authorization: Bearer ${{ secrets.SUPABASEANONKEY }}'
