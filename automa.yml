@@ -1,0 +1,15 @@
+name: Aggiornamento Supabase Programmato
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  aggiorna-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Esegui chiamata API
+        run: |
+          curl -X GET 'https://jbwwvludgpnybsbanyng.supabase.co/rest/v1/proposals' \
+          -H 'apikey: ${{ secrets.SUPABASEANONKEY }}' \
+          -H 'Authorization: Bearer ${{ secrets.SUPABASEANONKEY }}'
